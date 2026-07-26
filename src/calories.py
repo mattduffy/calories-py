@@ -193,12 +193,12 @@ def smoothAltitude(coords: List[List[float]], windowSize: int = SMOOTH_DEFAULT_W
     n = len(coords)
     # print(f"coords length: {n}")
     while i < n:
-        print(f"\tstarting loop: {i}")
+        # print(f"\tstarting loop: {i}")
         start = max(0, i - half)
         end = min(n - 1, (i + half) + 2) # + 2 because slice end index is non-inclusive
         # print(f"\tstart: {start}, end: {end}")
         slice = coords[start:end]
-        print(f"\tslice (length {len(slice)}): {slice}\n")
+        # print(f"\tslice (length {len(slice)}): {slice}\n")
         validAlts = [x[3] for x in slice if x[3] is not None]
         # print(f"\tvalidAlts: {validAlts}")
         averageAltitude = reduce(lambda acc, curr: acc + curr, validAlts, 0) / len(validAlts) if len(validAlts) > 0 else slice[3]
