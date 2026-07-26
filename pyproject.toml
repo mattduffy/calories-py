@@ -1,0 +1,24 @@
+[project]
+version = "0.0.1"
+name = "calories"
+description = "A small example package"
+readme = "Readme.md"
+requires-python = ">=3.9"
+license = "ISC"
+license-files = ["LICENSE"]
+authors = [
+  { name="Matthew Duffy", email="mattduffy@gmail.com" },
+]
+keywords = [
+    "calories burned", "metabolic rate", "joules per kcal", "terrain coefficients",
+    "pandolf", "santee", "pandolf-santee", "calorie predictive model",
+]
+dependencies = []
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/mattduffy/sampleproject"
+Issues = "https://github.com/mattduffy/sampleproject/issues"
