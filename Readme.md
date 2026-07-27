@@ -19,7 +19,7 @@ python -m pip install calories-py
 ```
 
 ```python
-from calories-py import lcdaCalories, simpleCalories, pandolfCalories, calorieEnsemble, minimumMechanicCalories
+from calories-py import lcdaCalories, simpleCalories, pandolfCalories, calorieEnsemble, minimumMechanicsCalories
 ```
 
 ## Simple Calories
@@ -155,7 +155,7 @@ options = {
   "smoothWindow": 5,      # optional, default value == 5
   "returnSegments": False # optional, return calculated GPS segments
 }
-minMech_calories = minimumMechanicCalories(coords, BMR, options)
+minMech_calories = minimumMechanicsCalories(coords, BMR, options)
 print(lcda_calories)
 # {
 #   'totalKcal': 476.211434723359,
