@@ -33,8 +33,16 @@ Homepage = "https://github.com/mattduffy/calories-py"
 Issues = "https://github.com/mattduffy/calories-py/issues"
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [tool.hatch.version]
 source = "vcs"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/*.py"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src/*.py"
+]
