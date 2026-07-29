@@ -19,7 +19,7 @@ python -m pip install calories-py
 ```
 
 ```python
-from calories-py import lcdaCalories, simpleCalories, pandolfCalories, calorieEnsemble, minimumMechanicsCalories
+from calories-py import simpleCalories, pandolfCalories, lcdaCalories, minimumMechanicsCalories, calorieEnsemble
 ```
 
 ## Simple Calories
