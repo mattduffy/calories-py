@@ -40,9 +40,9 @@ build-backend = "hatchling.build"
 source = "vcs"
 
 [tool.hatch.build.targets.wheel]
-include = [
-  "src/*.py"
-]
+# Maps the local file to the root of the installed package
+sources = ["src"]
+include = ["src/calories.py"]
 
 [tool.hatch.build.targets.sdist]
 include = [
