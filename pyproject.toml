@@ -40,7 +40,9 @@ build-backend = "hatchling.build"
 source = "vcs"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/*.py"]
+include = [
+  "src/*.py"
+]
 
 [tool.hatch.build.targets.sdist]
 include = [
