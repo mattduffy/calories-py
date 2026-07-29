@@ -1,17 +1,26 @@
 [project]
-version = "0.0.1"
-name = "calories"
-description = "A small example package"
+dynamic = ["version"]
+name = "calories-py"
+description = "This package is a dependency-free package that estimates calories burned during physical activities (walking, hiking, rucking, running, etc) with functions for both simple calorie estimates, and more advanced methods utilizing GPS data."
 readme = "Readme.md"
 requires-python = ">=3.9"
 license = "ISC"
 license-files = ["LICENSE"]
 authors = [
-  { name="Matthew Duffy", email="mattduffy@gmail.com" },
+  { name="Matthew Duffy", email="mattduffy@gmail.com" }
+]
+maintainers = [
+  { name="Matthew Duffy", email="mattduffy@gmail.com" }
 ]
 keywords = [
-    "calories burned", "metabolic rate", "joules per kcal", "terrain coefficients",
+    "calories burned",
+    "walk", "walking", "hike", "hiking", "ruck", "rucking",
+    "metabolic rate", "joules per kcal", "terrain coefficients",
+    "MET", "Metabolic Equivalent Tasks", "3.5 ml O2/(kg per min)", "Joules per Kcalorie",
+    "Basal Metabolic Rate", "VO2 Max", "VO2 Rest", "Mifflin-St Jeor",
     "pandolf", "santee", "pandolf-santee", "calorie predictive model",
+    "LCDA", "load carrying decision application",
+    "Minimum Mechanics"
 ]
 dependencies = []
 classifiers = [
@@ -20,5 +29,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/mattduffy/sampleproject"
-Issues = "https://github.com/mattduffy/sampleproject/issues"
+Homepage = "https://github.com/mattduffy/calories-py"
+Issues = "https://github.com/mattduffy/calories-py/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
