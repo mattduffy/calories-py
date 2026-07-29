@@ -35,3 +35,6 @@ Issues = "https://github.com/mattduffy/calories-py/issues"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+["tool.hatch.version"]
+source = "vcs"
