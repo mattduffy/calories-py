@@ -24,7 +24,7 @@ from calories import simpleCalories, pandolfCalories, lcdaCalories, minimumMecha
 
 ## Simple Calories
 ### Using Metabolic Equivalent Tasks
-The simple calories calculation takes 3 parameters: ``minutes``, ``weights``, and ``MET``, and returns a positive floating point value.  The function throws an ``Error`` if the required parameters are missing, or of the wrong type.  You need to know the ``MET`` value for any specific activity you are measuring.  A good list of ``MET`` values can be found at the [Compendium of Physical Activities](https://pacompendium.com).  The required body weight parameter is measured in kilograms.
+The simple calories calculation takes 3 parameters: ``minutes``, ``weights``, and ``MET``, and returns a positive floating point value.  The function raises a ``ValueError`` if the required parameters are missing, or of the wrong type.  You need to know the ``MET`` value for any specific activity you are measuring.  A good list of ``MET`` values can be found at the [Compendium of Physical Activities](https://pacompendium.com).  The required body weight parameter is measured in kilograms.
 
 ```python
 # The number of minutes MET activity is performed.
@@ -51,7 +51,10 @@ weights = {
 #     Rope jumping (84/min): 10.5
 #     Jogging, 6.8 mph:      11.2
 MET = 7.5
-simple_calories = simpleCalories(minutes, weights, MET)
+try:
+    simple_calories = simpleCalories(minutes, weights, MET)
+except:
+    print(f'there was a problem with the arugments {minutes} or {weights} or {MET}')
 print(simple_calories)
 # 143.381765625
 ```
@@ -64,7 +67,7 @@ The ``pandolfCalories()`` function expects the coordinates parameter to be an Li
 
 The Santee correction factor for including downhill travel (negative grade values) is being applied when calculating the advanced estimates.  This correction factor results in energy expenditure estimates that are typically about 16% - 25% higher when the GPS data contains significant amounts of downhill travel vs the original pandolf equation that couldn't account for negative grade values.
 
-To calculate the results, the pandolf-santee model is executed over each consecutive pair-wise GPS points in the the coordinates array.  Each of these pair-wise calculations is referred to as a segment.  To get the final results, the segments are aggregated together.  The boolean options property ``options["returnSegments"]`` controls whether a list of segment results is included in the function return value.  The default value is ``False``.  Setting this to ``True`` includes this segments list.
+To calculate the results, the pandolf-santee model is executed over each consecutive pair-wise GPS points in the the coordinates array.  Each of these pair-wise calculations is referred to as a segment.  To get the final results, the segments are aggregated together.  The boolean options property ``options["returnSegments"]`` controls whether a list of segment results is included in the function return value.  The default value is ``False``.  Setting this to ``True`` includes this segments list.  The function raises a ``ValueError`` if the required parameters are missing, or of the wrong type.
 
 ```python
 cooords = [
@@ -95,7 +98,10 @@ options = {
   "smoothWindow": 5,      # optional, default value == 5
   "returnSegments": False # optional, return calculated GPS segments
 }
-pandolf_calories = pandofCalories(coords, options)
+try:
+    pandolf_calories = pandofCalories(coords, options)
+except:
+    print(f'there was a problem with the arugments {coords} or {options}')
 print(pandolf_calories)
 # {
 #   'totalKcal': 581.492205191523,
@@ -109,7 +115,7 @@ print(pandolf_calories)
 ### The LCDA Model
 A much more recently developed predictive model for calculating energy expenditure over distance, while carrying a load is the **L**oad **C**arrying **D**ecision **A**id model. [LCDA](https://pmc.ncbi.nlm.nih.gov/articles/PMC8919998/) is considered to be slightly more accurate than the Pandolf model at the extra expense of requiring parameters to calculate basal metabolic rate.
 
-The ``coords`` and ``options`` parameters for ``lcdaCalories()`` are the same as for the above ``pandolfCalories()`` function.  The values in the ``BMR`` parameter object are used to create a value for basal metabolic rate using the [Mifflin-St Jeor equation](https://www.jandonline.org/article/S0002-8223(05)00149-5/abstract).
+The ``coords`` and ``options`` parameters for ``lcdaCalories()`` are the same as for the above ``pandolfCalories()`` function.  The values in the ``BMR`` parameter object are used to create a value for basal metabolic rate using the [Mifflin-St Jeor equation](https://www.jandonline.org/article/S0002-8223(05)00149-5/abstract).  The function raises a ``ValueError`` if the required parameters are missing, or of the wrong type.
 
 ```python
 BMR = {
@@ -127,7 +133,10 @@ options = {
   "smoothWindow": 5,      # optional, default value == 5
   "returnSegments": False # optional, return calculated GPS segments
 }
-lcda_calories = lcdaCalories(coords, BMR, options)
+try:
+    lcda_calories = lcdaCalories(coords, BMR, options)
+except:
+    print(f'there was a problem with the arugments {coords} or {BMR} or {options}')
 print(lcda_calories)
 # {
 #   'totalKcal': 590.292205191523,
@@ -138,7 +147,7 @@ print(lcda_calories)
 ```
 
 ### The Minimum Mechanics Model
-The Minimum Mechanics predictive model was developed by [Ludlow & Weyland](https://pubmed.ncbi.nlm.nih.gov/28729390/) as a less complex model altrnative to the negative grade-corrective Pandolf-Santee model.  This model incorporates the basal metabolic rate, like the **LCDA** model above, but forgoes terrain characterization.  The function signature is the same as that for **LCDA**.
+The Minimum Mechanics predictive model was developed by [Ludlow & Weyland](https://pubmed.ncbi.nlm.nih.gov/28729390/) as a less complex model altrnative to the negative grade-corrective Pandolf-Santee model.  This model incorporates the basal metabolic rate, like the **LCDA** model above, but forgoes terrain characterization.  The function signature is the same as that for **LCDA**.  The function raises a ``ValueError`` if the required parameters are missing, or of the wrong type.
 
 ```python
 BMR = {
@@ -155,7 +164,10 @@ options = {
   "smoothWindow": 5,      # optional, default value == 5
   "returnSegments": False # optional, return calculated GPS segments
 }
-minMech_calories = minimumMechanicsCalories(coords, BMR, options)
+try:
+    minMech_calories = minimumMechanicsCalories(coords, BMR, options)
+except:
+    print(f'there was a problem with the arugments {coords} or {BMR} or {options}')
 print(lcda_calories)
 # {
 #   'totalKcal': 476.211434723359,
@@ -166,7 +178,7 @@ print(lcda_calories)
 ```
 
 ### The Calorie Ensemble
-If you would like to compare the results of each of the predictive models for a given hike's dataset, you can use the `calorieEnsemble()` function.  This function maps each of the predictive models over each segment of the coordinates array in a single pass, to give comparative results.  For this function, the `BMR` parameter is combined into the `options` parameter.  You will notice that each of the predictive models gives a slightly different result for `totalKcal`.  This is expected and indicative of the differences in the respective models.
+If you would like to compare the results of each of the predictive models for a given hike's dataset, you can use the `calorieEnsemble()` function.  This function maps each of the predictive models over each segment of the coordinates array in a single pass, to give comparative results.  For this function, the `BMR` parameter is combined into the `options` parameter.  You will notice that each of the predictive models gives a slightly different result for `totalKcal`.  This is expected and indicative of the differences in the respective models.  The function raises a ``ValueError`` if the required parameters are missing, or of the wrong type.
 
 ```python
 options = {
@@ -183,7 +195,10 @@ options = {
     "sex": 'm'            # Required, either 'm' or 'f'
   },
 }
-resultSet = calorieEnsemble(coords, options)
+try:
+    resultSet = calorieEnsemble(coords, options)
+except:
+    print(f'there was a problem with the arugments {coords} or {options}')
 print(resultSet)
 # {
 #   'lcda': {
