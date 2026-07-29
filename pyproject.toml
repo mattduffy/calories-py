@@ -1,7 +1,7 @@
 [project]
 dynamic = ["version"]
 name = "calories-py"
-description = "This package is a dependency-free package that estimates calories burned during physical activities (walking, hiking, rucking, running, etc) with functions for both simple calorie estimates, and more advanced methods utilizing GPS data."
+description = "This package is a dependency-free package that estimates calories burned during physical activities (walking, hiking, rucking, etc) with functions for both simple calorie estimates, and more advanced methods utilizing GPS data."
 readme = "Readme.md"
 requires-python = ">=3.9"
 license = "ISC"
