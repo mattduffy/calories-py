@@ -64,7 +64,7 @@ The ``pandolfCalories()`` function expects the coordinates parameter to be an Li
 
 The Santee correction factor for including downhill travel (negative grade values) is being applied when calculating the advanced estimates.  This correction factor results in energy expenditure estimates that are typically about 16% - 25% higher when the GPS data contains significant amounts of downhill travel vs the original pandolf equation that couldn't account for negative grade values.
 
-To calculate the results, the pandolf-santee model is executed over each consecutive pair-wise GPS points in the the coordinates array.  Each of these pair-wise calculations is referred to as a segment.  To get the final results, the segments are aggregated together.  The boolean options property ``options["returnSegments"]`` controls whether an list of segment results is included in the function return value.  The default value is ``False``.  Setting this to ``True`` includes this segments list.
+To calculate the results, the pandolf-santee model is executed over each consecutive pair-wise GPS points in the the coordinates array.  Each of these pair-wise calculations is referred to as a segment.  To get the final results, the segments are aggregated together.  The boolean options property ``options["returnSegments"]`` controls whether a list of segment results is included in the function return value.  The default value is ``False``.  Setting this to ``True`` includes this segments list.
 
 ```python
 cooords = [
