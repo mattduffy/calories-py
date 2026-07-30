@@ -6,7 +6,7 @@
 - [Calorie Ensemble](#the-calorie-ensemble)
 
 ## Estimating Energy Expenditure and Calories Burned
-This package is a dependency-free ES module that estimates calories burned during physical activities (walking, hiking, rucking, etc) with functions for both simple calorie estimates, and more advanced methods utilizing GPS data.
+This package is a dependency-free module that estimates calories burned during physical activities (walking, hiking, rucking, etc) with functions for both simple calorie estimates, and more advanced methods utilizing GPS data.
 
 Creating accurate estimates of the number of calories burned during a physical activity period is notoriously difficult, especially when attempting to incorporate positional data.  Most instances of estimating calories burned are simply calculated as an exertion effort based on body weight, time duration and a known **MET** ([Metabolic Equivalent Task](https://en.wikipedia.org/wiki/Metabolic_equivalent_of_task)) value for a given activity.  This method doesn't include positional data such as distance, velocity or elevation changes.  This can be considered a simple calorie estimate.
 
@@ -24,7 +24,7 @@ from calories import simpleCalories, pandolfCalories, lcdaCalories, minimumMecha
 
 ## Simple Calories
 ### Using Metabolic Equivalent Tasks
-The simple calories calculation takes 3 parameters: ``minutes``, ``weights``, and ``MET``, and returns a positive floating point value.  The function raises a ``ValueError`` if the required parameters are missing, or of the wrong type.  You need to know the ``MET`` value for any specific activity you are measuring.  A good list of ``MET`` values can be found at the [Compendium of Physical Activities](https://pacompendium.com).  The required body weight parameter is measured in kilograms.
+The simple calories calculation takes 3 parameters: ``minutes``, ``weights``, and ``MET``, and returns a positive floating point value.  The function raises a ``ValueError`` if the required parameters are missing, or of the wrong type.  The required body weight parameter is measured in kilograms.  You need to know the ``MET`` value for any specific activity you are measuring.  A good list of ``MET`` values can be found at the [Compendium of Physical Activities](https://pacompendium.com).
 
 ```python
 # The number of minutes MET activity is performed.
@@ -44,13 +44,14 @@ weights = {
 }
 # The MET number for a particular task.  For example:
 #     Walking slowly:         2.0
-#     Walking, 3.0 mph:       3.0
+#     Walking, 2.5 mph:       3.0
+#     Walking for pleasure    3.5 <-- Default value	
 #     Weight lifting:         5.0
-#     Backpacking:            7.5 <-- Default value
+#     Backpacking:            7.5
 #     Swimming:               8.0
 #     Rope jumping (84/min): 10.5
 #     Jogging, 6.8 mph:      11.2
-MET = 7.5
+MET = 7.5 # Backpacking
 try:
     simple_calories = simpleCalories(minutes, weights, MET)
 except:
