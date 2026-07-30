@@ -209,20 +209,23 @@ def smoothAltitude(coords: List[List[float]], windowSize: int = SMOOTH_DEFAULT_W
 
 
 # Simple MET based calorie estimate.
-def simpleCalories(minutes: int = 1, weights: dict = { "body": 0, "ruck": 0, "water": 0 }, MET: float = 7.5) -> float:
+def simpleCalories(minutes: int = 1, weights: dict = { "body": 0, "ruck": 0, "water": 0 }, MET: float = 3.5) -> float:
     """The simplest calorie estimating function.  Calculates the ratio of energy spent per unit time during a specific
     physical activity to a reference value of 3.5 ml O2 / (kg·min).
 
     Args:
         minutes (float): Time spent expending energy, in minutes.
-        weights (dict): Collection of weight values, in kilograms.
-        MET (float): The Metabolic Equivalent Task number of activity.
+        weights (dict): Collection of weight values.
+        weights["body"] = 0 (dict): Body weight, in kilograms.
+        weights["ruck"] = 0 (dict): Ruck weight carried, in kilograms.
+        weights["water"] = 0 (dict): Water weight carried, in kilograms.
+        MET = 3.5 (float): The Metabolic Equivalent Task number of activity.
 
     Raises:
         ValueError: If minutes is not a valid, positive number.
-        ValueError: If weights.body is not a valid, positive number.
+        ValueError: If weights["body"] is not a valid, positive number.
         ValueError: If MET is not a valid, positive number.
-        
+
     Returns:
         float: Number of calories burned.
     """
@@ -235,7 +238,7 @@ def simpleCalories(minutes: int = 1, weights: dict = { "body": 0, "ruck": 0, "wa
     COMBINED = weights["body"] + weights["ruck"] + weights["water"]
     # print(COMBINED)
     return ((MET * 3.5 * COMBINED) / 200) * minutes
-    
+
 
 # Corrective factor for downhill (G < 0) segments of the hike.
 def santeeCorrective(W: float, L: float, V: float, G: float, n: float) -> float:
