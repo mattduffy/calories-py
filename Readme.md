@@ -233,8 +233,8 @@ from calories import pandolfCalories, load_sample_data
 sample_data = load_sample_data()
 coords = sample_data["features"][0]["geometry"]["coordinates"]
 options = {
-    "bodyWeightKg": sample_data["features"][0]["properties"]["weights"]["body"] / 2.2, # convert sample data weight from lbs to kgs
-    "ruckWeightKg": sample_data["features"][0]["properties"]["weights"]["ruck"] / 2.2, # convert sample data weight from lbs to kgs
+    "bodyWeightKg": sample_data["features"][0]["properties"]["weights"]["body"] / 2.2, # convert sample data body weight from lbs to kgs
+    "loadKg": sample_data["features"][0]["properties"]["weights"]["ruck"] / 2.2,       # convert sample data ruck weight from lbs to kgs
     "smooth": True,
     "smoothWindow": 5
 }
