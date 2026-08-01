@@ -4,6 +4,7 @@
 - [LCDA Model](#the-lcda-model)
 - [Minimum Mechanics Model](#the-minimum-mechanics-model)
 - [Calorie Ensemble](#the-calorie-ensemble)
+- [Sample Data](#the-sample-data)
 
 ## Estimating Energy Expenditure and Calories Burned
 This package is a dependency-free module that estimates calories burned during physical activities (walking, hiking, rucking, etc) with functions for both simple calorie estimates, and more advanced methods utilizing GPS data.
@@ -203,22 +204,46 @@ except:
 print(resultSet)
 # {
 #   'lcda': {
-#     'totalKcal': 590.292205191523,
-#     'totalDistanceM': 5544.758689134893,
-#     'totalDurationSec': 3829.9640000000027,
-#     'avgSpeedMs': 1.4477312813214143
+#       'totalKcal': 590.292205191523,
+#       'totalDistanceM': 5544.758689134893,
+#       'totalDurationSec': 3829.9640000000027,
+#       'avgSpeedMs': 1.4477312813214143
 #   },
 #   'pandolf': {
-#     'totalKcal': 581.492205191523,
-#     'totalDistanceM': 5544.758689134893,
-#     'totalDurationSec': 3829.9640000000027,
-#     'avgSpeedMs': 1.4477312813214143
+#       'totalKcal': 581.492205191523,
+#       'totalDistanceM': 5544.758689134893,
+#       'totalDurationSec': 3829.9640000000027,
+#       'avgSpeedMs': 1.4477312813214143
 #   },
 #   'minMech': {
-#     'totalKcal': 476.211434723359,
-#     'totalDistanceM': 5544.758689134893,
-#     'totalDurationSec': 3829.9640000000027,
-#     'avgSpeedMs': 1.4477312813214143
+#       'totalKcal': 476.211434723359,
+#       'totalDistanceM': 5544.758689134893,
+#       'totalDurationSec': 3829.9640000000027,
+#       'avgSpeedMs': 1.4477312813214143
 #   }
+# }
+```
+
+### Sample Data
+This package includes a sample data file to help illustrate the data format.  ``sample_data.json`` is a GEOJson formatted data file containing a single ``LineString`` feature with a coordinates array that can be passed into the calorie functions.  In this sample data, the ``features[0]["properties"]["weights"]`` dict contains the necessary weight values to supply in the options parameter of the calories functions (these weights are recorded in lbs so convert them to kgs).
+
+The coordinates array in this sample data does not conform exactly to the GEOJson specification, which only defines longitude and latitude values in the array.  No guarantee is given to the validity of values following latitude.  In this case, typical GPS values of accuracy, altitude, timestamp, etc. are provided to support the calorie functions.
+```python
+from calories import pandolfCalories, load_sample_data
+sample_data = load_sample_data()
+coords = sample_data["features"][0]["geometry"]["coordinates"]
+options = {
+    "bodyWeightKg": sample_data["features"][0]["properties"]["weights"]["body"] / 2.2, # convert sample data weight from lbs to kgs
+    "ruckWeightKg": sample_data["features"][0]["properties"]["weights"]["ruck"] / 2.2, # convert sample data weight from lbs to kgs
+    "smooth": True,
+    "smoothWindow": 5
+}
+cals = pandolfCalories(coords, options)
+print(cals)
+# {
+#    'totalKcal': 187.1436731904045,
+#    'totalDistanceM': 1899.4192932570354,
+#    'totalDurationSec': 949,
+#    'avgSpeedMs': 2.001495567183388
 # }
 ```
