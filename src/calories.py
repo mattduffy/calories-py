@@ -1,6 +1,17 @@
+import json
 import math
 import random
+from pathlib import Path
 from functools import reduce
+
+_PACKAGE_DIR = Path(__file__).parent
+# Load the sample_data.json file for readme examples.
+def load_sample_data():
+    """Load the bundled sample_data.json as a Python object."""
+    data_path = _PACKAGE_DIR / "sample_data.json"
+    with open(data_path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
 
 # Some constants are defined for use in the entire module.
 
