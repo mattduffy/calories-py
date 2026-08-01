@@ -42,9 +42,13 @@ source = "vcs"
 [tool.hatch.build.targets.wheel]
 # Maps the local file to the root of the installed package
 sources = ["src"]
-include = ["src/calories.py"]
+include = [
+    "src/calories.py",
+    "src/sample_data.json"
+]
 
 [tool.hatch.build.targets.sdist]
 include = [
-  "src/*.py"
+  "src/*.py",
+  "src/*.json"
 ]
