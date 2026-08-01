@@ -1,16 +1,14 @@
 import json
 import math
 import random
-from pathlib import Path
 from functools import reduce
+from importlib import resources
 
-_PACKAGE_DIR = Path(__file__).parent
 # Load the sample_data.json file for readme examples.
 def load_sample_data():
     """Load the bundled sample_data.json as a Python object."""
-    data_path = _PACKAGE_DIR / "sample_data.json"
-    with open(data_path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    data_text = resources.files("calories").joinpath("sample_data.json").read_text(encoding="utf-8")
+    return json.loads(data_text)
 
 
 # Some constants are defined for use in the entire module.
@@ -925,5 +923,4 @@ def calorieEnsemble(coords: List[List[float]], options: dict) -> dict:
     results["lcda"]["avgSpeedMs"] = results["lcda"]["totalDistanceM"] / results["lcda"]["totalDurationSec"] if results["lcda"]["totalDurationSec"] > 0 else 0
     
     return results
-
 
