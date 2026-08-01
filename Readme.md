@@ -4,7 +4,7 @@
 - [LCDA Model](#the-lcda-model)
 - [Minimum Mechanics Model](#the-minimum-mechanics-model)
 - [Calorie Ensemble](#the-calorie-ensemble)
-- [Sample Data](#the-sample-data)
+- [Sample Data](#sample-data)
 
 ## Estimating Energy Expenditure and Calories Burned
 This package is a dependency-free module that estimates calories burned during physical activities (walking, hiking, rucking, etc) with functions for both simple calorie estimates, and more advanced methods utilizing GPS data.
