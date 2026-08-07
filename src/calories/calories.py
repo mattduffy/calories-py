@@ -1,12 +1,53 @@
+import os
 import json
 import math
 import random
-from functools import reduce
+from functools import reduce, wraps
 from importlib import resources
 
+# Check if running in local dev/debugging or production context
+_DEBUG_ = os.environ.get("CALORIES_DEBUG", "").lower() == 'true'
+print(f'what is the value of _DEBUG_? {_DEBUG_}')
+
+# Decorator to wrap around print() to suppress output if _DEBUG_ == False
+def print_decorator(func):
+    """Restrict printing debugging info when the 'CALORIES_DEBUG'
+    environment variable is present.
+    """
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if _DEBUG_:
+            return func(*args, **kwargs)
+        return None
+    return wrapper
+
+print = print_decorator(print)
+print(f'os.environ["calories_debug"] {os.environ.get("CALORIES_DEBUG")}')
+    
 # Load the sample_data.json file for readme examples.
 def load_sample_data():
-    """Load the bundled sample_data.json as a Python object."""
+    """Load the bundled sample_data.json as a Python dictionary.
+
+    The sample data is a GEOjson formatted file from an imaginary
+    hike tracking app.  The sample data contains 1 GEOjson feature,
+    in the form of a LineString.  The LineString's coordinates array
+    extends the official specification by including GPS data past the
+    longitude and latitude values.  Each element of the coordinates array
+    is in the form:
+
+        [
+            longitude (float),
+            latitude (float),
+            heading (float compass degrees),
+            altitude (float meters),
+            accuracy (float meters),
+            timestamp (int milliseconds)
+        ]
+
+    This format was chosen to conveniently match the argument type of the
+    calories functions and do not reflect any particular app convention.  Your
+    data will likely require some amount of preprocessing to fit this format.
+    """
     data_text = resources.files("calories").joinpath("sample_data.json").read_text(encoding="utf-8")
     return json.loads(data_text)
 
@@ -317,6 +358,12 @@ def processPandolfSegment(point1: List, point2: List, W: float, L: float, H2O: f
     p1 = { "longitude": lon1, "latitude": lat1, "altitude": alt1 }
     p2 = { "longitude": lon2, "latitude": lat2, "altitude": alt2 }
     horizontalDistance = pointDistance(p1, p2)
+    if isinstance(t1, dict):
+        # print(f't1 type {type(t1)}, {t1}')
+        t1 = int(tuple(t1.values())[0])
+    if isinstance(t2, dict):
+        # print(f't2 type {type(t2)}, {t2}')
+        t2 = int(tuple(t2.values())[0])
     durationSec = m2s(t2 - t1)
     # skip GPS jitter, stationary points, or out-of-order timestamps
     if durationSec <= 0 or horizontalDistance < MIN_SEGMENT_DIST_M:
@@ -380,7 +427,7 @@ def pandolfCalories(coords: List[List[float]] = [], options: dict = {}) -> dict:
     if len(coords) < 2:
         raise ValueError(f"The coordinates array needs at least 2 elements, {len(coords)} provided.")
     if not bodyWeightKg or bodyWeightKg <= 0:
-        raise ValueError(f"options.bodyWeightkg is required and must be a positive number, {bodyWeightKg} provided.")
+        raise ValueError(f'options["bodyWeightkg"] is required and must be a positive number, {bodyWeightKg} provided.')
     track = smoothAltitude(coords, smoothWindow) if smooth else coords
     # print(len(track))
     segments = []
@@ -494,6 +541,12 @@ def processLcdaSegment(point1: List, point2: List, W: float, L: float, H2O: floa
     p1 = { "longitude": lon1, "latitude": lat1, "altitude": alt1 }
     p2 = { "longitude": lon2, "latitude": lat2, "altitude": alt2 }
     horizontalDistance = pointDistance(p1, p2)
+    if isinstance(t1, dict):
+        # print(f't1 type {type(t1)}, {t1}')
+        t1 = int(tuple(t1.values())[0])
+    if isinstance(t2, dict):
+        # print(f't2 type {type(t2)}, {t2}')
+        t2 = int(tuple(t2.values())[0])
     durationSec = m2s(t2 - t1) # seconds
 
     # Skip GPS jitter, stationary points, or out-of-order timestamps.
@@ -574,7 +627,7 @@ def lcdaCalories(coords: List[List[float]] = [], BMR: dict = {}, options: dict =
                     height: positive number (cm)
                     weight: positive number (kg)
                     age: positive number (years)
-                    sex: string \'m|f\'"""
+                    sex: string 'm'|'f'"""
         raise ValueError(msg)
 
     bodyWeightKg = options.get("bodyWeightKg", 0)
@@ -697,6 +750,12 @@ def processMinimumMechanicsSegment(point1: List[float], point2: List[float], W: 
     p1 = { "longitude": lon1, "latitude": lat1, "altitude": alt1 }
     p2 = { "longitude": lon2, "latitude": lat2, "altitude": alt2 }
     horizontalDistance = pointDistance(p1, p2)
+    if isinstance(t1, dict):
+        # print(f't1 type {type(t1)}, {t1}')
+        t1 = int(tuple(t1.values())[0])
+    if isinstance(t2, dict):
+        # print(f't2 type {type(t2)}, {t2}')
+        t2 = int(tuple(t2.values())[0])
     durationSec = m2s(t2 - t1) # seconds
 
     # Skip GPS jitter, stationary points, or out-of-order timestamps.
@@ -777,7 +836,7 @@ def minimumMechanicsCalories(coords, BMR, options = {}) -> dict:
     returnSegments = options.get("returnSegments", False)
 
     if not bodyWeightKg or bodyWeightKg <= 0:
-        raise ValueError(f'options.bodyWeightKg is required and must be a positive number.')
+        raise ValueError(f'options["bodyWeightKg"] is required and must be a positive number.')
 
     restVO2 = DEFAULT_RESTING_VO2
     restVO2 = vo2FromWattsPerKg(mResting(BMR["height"], BMR["weight"], BMR["age"], BMR["sex"]))
@@ -875,7 +934,7 @@ def calorieEnsemble(coords: List[List[float]], options: dict) -> dict:
                  height: positive number (cm)
                  weight: positive number (kg)
                  age: positive number (years)
-                sex: string \'m|f\'"""
+                sex: string 'm'|'f'"""
         raise ValueError(msg)
 
     if not bodyWeightKg or bodyWeightKg <= 0:
