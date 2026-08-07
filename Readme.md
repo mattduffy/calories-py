@@ -22,6 +22,7 @@ python -m pip install calories-py
 ```python
 from calories import simpleCalories, pandolfCalories, lcdaCalories, minimumMechanicsCalories, calorieEnsemble
 ```
+All of the functions in the calories-py package are fully documented, with descriptions of argument types, default values and return types.  Use the ``help(<function>)`` function to view the documentation.
 
 ## Simple Calories
 ### Using Metabolic Equivalent Tasks
@@ -55,10 +56,17 @@ weights = {
 MET = 7.5 # Backpacking
 try:
     simple_calories = simpleCalories(minutes, weights, MET)
-except:
+except ValueError as v:
+    print(v)
+except TypeError as t:
+    print(t)
+execpt Exception as e:
     print(f'there was a problem with the arugments {minutes} or {weights} or {MET}')
+    print(e)
 print(simple_calories)
 # 143.381765625
+
+# try help(simpleCalories) for function documentation.
 ```
 
 ## Advanced Calorie Predictive Models
@@ -102,7 +110,8 @@ options = {
 }
 try:
     pandolf_calories = pandofCalories(coords, options)
-except:
+except ValueError as v:
+    print(v)
     print(f'there was a problem with the arugments {coords} or {options}')
 print(pandolf_calories)
 # {
@@ -112,6 +121,8 @@ print(pandolf_calories)
 #   'avgSpeedMs': 1.4477312813214143,
 #   'segments': [{...},{...},...], # Only included if options["returnSegments"] == True
 # }
+
+# try help(pandolfCalories) for function documentation.
 ```
 
 ### The LCDA Model
@@ -137,7 +148,8 @@ options = {
 }
 try:
     lcda_calories = lcdaCalories(coords, BMR, options)
-except:
+except ValueError as v:
+    print(v)
     print(f'there was a problem with the arugments {coords} or {BMR} or {options}')
 print(lcda_calories)
 # {
@@ -146,6 +158,8 @@ print(lcda_calories)
 #   'totalDurationSec': 3829.9640000000027,
 #   'avgSpeedMs': 1.4477312813214143
 # }
+
+# try help(lcdaCalories) for function documentation.
 ```
 
 ### The Minimum Mechanics Model
@@ -168,7 +182,8 @@ options = {
 }
 try:
     minMech_calories = minimumMechanicsCalories(coords, BMR, options)
-except:
+except ValueError as v:
+    print(v)
     print(f'there was a problem with the arugments {coords} or {BMR} or {options}')
 print(lcda_calories)
 # {
@@ -177,6 +192,8 @@ print(lcda_calories)
 #   'totalDurationSec': 3829.9640000000027,
 #   'avgSpeedMs': 1.4477312813214143
 # }
+
+# try help(minimumMechanicsCalories) for function documentation.
 ```
 
 ### The Calorie Ensemble
@@ -199,7 +216,8 @@ options = {
 }
 try:
     resultSet = calorieEnsemble(coords, options)
-except:
+except ValueError as v:
+    print(v)
     print(f'there was a problem with the arugments {coords} or {options}')
 print(resultSet)
 # {
@@ -222,6 +240,8 @@ print(resultSet)
 #       'avgSpeedMs': 1.4477312813214143
 #   }
 # }
+
+# try help(calorieEnsemble) for function documentation.
 ```
 
 ### Sample Data
@@ -240,10 +260,13 @@ options = {
 }
 cals = pandolfCalories(coords, options)
 print(cals)
+'totalKcal': , 'totalDistanceM': , 'totalDurationSec': 949, 'avgSpeedMs': 2.001495567183388}
 # {
-#    'totalKcal': 187.1436731904045,
+#    'totalKcal': 222.3793135896461,
 #    'totalDistanceM': 1899.4192932570354,
 #    'totalDurationSec': 949,
 #    'avgSpeedMs': 2.001495567183388
 # }
+
+# try help(load_sample_data) for function documentation.
 ```
