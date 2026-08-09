@@ -197,6 +197,12 @@ def calculateVerticalInterval(alt1: float, alt2: float) -> float:
     Returns:
         float: Altitude difference.
     """
+    if alt2 is None: #or isinstance(alt2, None):
+        print(f'alt2 {alt2} - alt1 {alt1} = (fixed) {alt1 - alt1}')
+        alt2 = alt1
+    if alt1 is None: #or isinstance(alt1, None):
+        print(f'alt2 {alt2} - alt1 {alt1} = (fixed) {alt2 - alt2}')
+        alt1 = alt2
     return alt2 - alt1
 
 
@@ -370,7 +376,8 @@ def processPandolfSegment(point1: List, point2: List, W: float, L: float, H2O: f
         return None
     slopeGrade = calculateSlopeGrade(p1, p2)
     grade = slopeGrade["grade"]
-    altitudeDiff = alt2 = alt1
+    #altitudeDiff = alt2 - alt1
+    altitudeDiff = calculateVerticalInterval(alt2, alt1)
     # Derived speed, clamped to MAX_SPEED_MS to guard against GPS outliers.
     speed = min(horizontalDistance / durationSec, MAX_SPEED_MS)
     # Metabolic rate (Watts) for this segment.
@@ -557,8 +564,8 @@ def processLcdaSegment(point1: List, point2: List, W: float, L: float, H2O: floa
     slopeGrade = calculateSlopeGrade(p1, p2)
     grade = slopeGrade["grade"]
     # Uses horizontal distance as the run (standard for hiking/trail grade).
-    altitudeDiff = alt2 - alt1
-
+    # altitudeDiff = alt2 - alt1
+    altitudeDiff = calculateVerticalInterval(alt2, alt1)
     # Derived speed - clamped to MAX_SPEED_MS to guard against GPS outliers.
     speed = min(horizontalDistance / durationSec, MAX_SPEED_MS)
 
@@ -764,8 +771,8 @@ def processMinimumMechanicsSegment(point1: List[float], point2: List[float], W: 
 
     slopeGrade = calculateSlopeGrade(p1, p2)
     grade = slopeGrade["grade"]
-    altitudeDiff = alt2 - alt1
-
+    # altitudeDiff = alt2 - alt1
+    altitudeDiff = calculateVerticalInterval(alt2, alt1)
     # Derived speed - clamped to MAX_SPEED_MS to guard against GPS outliers.
     speed = min(horizontalDistance / durationSec, MAX_SPEED_MS)
 
