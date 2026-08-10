@@ -39,6 +39,9 @@ build-backend = "hatchling.build"
 [tool.hatch.version]
 source = "vcs"
 
+[tool.hatch.build.hooks.vcs]
+version-file = "src/calories/_version.py"
+
 [tool.hatch.build.targets.wheel]
 # Maps the local file to the root of the installed package
 packages = ["src/calories"]
