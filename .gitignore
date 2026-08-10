@@ -1,5 +1,7 @@
 .DS_STORE
 src/calories/_version.py
+**/_version.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

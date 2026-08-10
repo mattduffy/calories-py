@@ -42,6 +42,10 @@ source = "vcs"
 [tool.hatch.build.hooks.vcs]
 version-file = "src/calories/_version.py"
 
+# Add this block to disable automatic dev tagging
+[tool.hatch.version.raw-options]
+version_scheme = "no-guess-dev"
+
 [tool.hatch.build.targets.wheel]
 # Maps the local file to the root of the installed package
 packages = ["src/calories"]
