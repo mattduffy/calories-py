@@ -7,7 +7,8 @@ from importlib import resources
 
 # Check if running in local dev/debugging or production context
 _DEBUG_ = os.environ.get("CALORIES_DEBUG", "").lower() == 'true'
-print(f'what is the value of _DEBUG_? {_DEBUG_}')
+if _DEBUG_:
+    print(f'what is the value of _DEBUG_? {_DEBUG_}')
 
 # Decorator to wrap around print() to suppress output if _DEBUG_ == False
 def print_decorator(func):
@@ -990,3 +991,37 @@ def calorieEnsemble(coords: List[List[float]], options: dict) -> dict:
     
     return results
 
+
+# Provide a useful list of available function names and descriptions.
+def models() -> dict:
+    """A list of the available calorie predictive models in this library.
+
+    Returns:
+        dict: A dictionary of lists:
+                "models" lists available model functions,
+                "collections" lists availble ensemble functions.
+    """
+    pandolf = {
+        "name": "Pandolf-Santee",
+        "function": "pandolfCalories",
+        "desc": """The Santee corrected version of the original energy expenditure model developed by USARIEM in the 1970s.  This model incorporates positional data, slope/grade, terrain characterizations, body weight and load carried to predict the energetic costs non-mechanized, cross-country movement, carrying loads.""",
+        "authors": list(("Paul W. Richmond", "Adam W. Potter" , "William R. Santee"))
+    }
+    lcda = {
+        "name": "Load Carrying Decision Aid (LCDA)",
+        "function": "lcdaCalories",
+        "desc": """Developed as part of a mission-planning software tool for the US military and published in 2017, this model attempts to provide more accurate energy expenditure predictions over steeper terrain variations while carrying heavier loads than previous models.  This model attempts to improve the original Pandolf-Santee model with modern GPS positional data and participant's BMR values.""",
+        "authors": list(("David P. Looney", "Elizabeth M. Lavoie", "Sai V. Vangala", "Lucas D. Holden", "Peter S. Figueiredo", "Karl E. Friedl", "Peter N. Frykman", "Jason W. Hancock", "Scott J. Montain", "J. Luke Pryor", "William R. Santee", "Adam W. Potter"))
+    }
+    minMech = {
+        "name": "Minimum Mechanics",
+        "function": "minimumMechanicsCalories",
+        "desc": """A predictive model published in 2017 which posits that the metabolic energy of the human walking economy can be accurately predicted using a minimum of three variables: "speed, surface grade, and total gravitational load".  This model uses GPS positional data, along with participant's BMR values to estimate total energy expeditures.""",
+        "authors": list(("Lindsay W. Ludlow", "Peter G. Weyand")),
+    }
+    ensemble = {
+        "name": "Calories Ensemble",
+        "function": "calorieEnsemble",
+        "desc": """Perform all of the available predictive model calculations at once over a given dataset."""
+    }
+    return dict(models = list((pandolf, minMech, lcda)), collections = list((ensemble,)))
