@@ -4,6 +4,7 @@
 - [LCDA Model](#the-lcda-model)
 - [Minimum Mechanics Model](#the-minimum-mechanics-model)
 - [Calorie Ensemble](#the-calorie-ensemble)
+- [List Available Models](#list-available-models)
 - [Sample Data](#sample-data)
 
 ## Estimating Energy Expenditure and Calories Burned
