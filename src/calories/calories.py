@@ -1001,6 +1001,13 @@ def models() -> dict:
                 "models" lists available model functions,
                 "collections" lists availble ensemble functions.
     """
+    simple = {                                                                                      
+     "name": "Simple Calories",
+     "shortName": "Simple Calories",                                                        
+     "function": "simpleCalories",
+     "desc": """A relative estimate of energy spent per unit of time doing a specific physical activity to a reference value of 3.5 ml O₂/(kg·min).""",
+     "authors": [],                                                                         
+    }
     pandolf = {
         "name": "Pandolf-Santee",
         "shortName": "Pandolf-Santee",
@@ -1027,4 +1034,4 @@ def models() -> dict:
         "function": "calorieEnsemble",
         "desc": """Perform all of the available predictive model calculations at once over a given dataset."""
     }
-    return dict(models = list((pandolf, minMech, lcda)), collections = list((ensemble,)))
+    return dict(models = list((simple, pandolf, minMech, lcda)), collections = list((ensemble,)))
