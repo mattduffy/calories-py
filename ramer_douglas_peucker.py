@@ -1,5 +1,5 @@
 import math
-from cross_track_distance import cross_track_distance 
+from cross_track_distance import cross_track_distance
 
 def degs2Rads(degs: float) -> float:
     return degs * math.pi/180
@@ -8,7 +8,7 @@ def rads2Degs(rads: float) -> float:
     return rads * 180 / math.pi
 
 def ramer_douglas_peucker(points: list[list[float]] = (), epsilon: float = 2.0) -> list[list[float]]:
-    """A cartographic generalization algorithm to reduce the number of points in a 
+    """A cartographic generalization algorithm to reduce the number of points in a
        curve, composed of line segments, into a similar curve consisting of fewer points.
 
     Args:
@@ -32,7 +32,7 @@ def ramer_douglas_peucker(points: list[list[float]] = (), epsilon: float = 2.0) 
             max_distance = d
             #print(f'\tnew max_distance {max_distance}, at index {index}')
         #print('\n')
-        
+
     if (max_distance > epsilon):
         # print(f'max_distance {max_distance} > epsilon {epsilon}')
         # print(f'making recursive calls')
@@ -51,5 +51,6 @@ def ramer_douglas_peucker(points: list[list[float]] = (), epsilon: float = 2.0) 
     else:
         # print(f'max_distance {max_distance} !> epsilon {epsilon}')
         simplified_list = list((points[0], points[end - 1]))
-        
+
     return simplified_list
+
