@@ -7,7 +7,7 @@ def rads2Degs(rads: float) -> float:
     return rads * 180 / math.pi
 
 def cross_track_distance(point: list[float], track: list[list[float]], scale='m') -> float:
-    """Calculate the perpendicular distance (in meters) of a gps point from a track (polyline 
+    """Calculate the perpendicular distance (in meters) of a gps point from a track (polyline
         segment) consisting of two other gps points.
 
     Args:
@@ -16,7 +16,7 @@ def cross_track_distance(point: list[float], track: list[list[float]], scale='m'
         scale (str): Sets the unit size of the track distance value, either 'km' or 'm'.
 
     Returns:
-        float: The perpendicular distance of the point from the track (line segment).    
+        float: The perpendicular distance of the point from the track (line segment).
     """
     # Convert all longitudes and latitudes from degrees to radians
     point_lon, point_lat = math.radians(point[0]), math.radians(point[1])
